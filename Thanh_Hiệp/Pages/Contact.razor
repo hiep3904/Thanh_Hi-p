@@ -1,0 +1,118 @@
+﻿@page "/lienhe"
+
+<PageTitle>Liên Hệ - Bánh Thanh Hiệp</PageTitle>
+
+<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-lg">
+        <div class="card-body p-5">
+            <h1 class="text-center mb-5 text-brown pacifico-font">Liên Hệ Với Chúng Tôi</h1>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="contact-info-block p-4 rounded text-center h-100">
+                        <i class="oi oi-phone display-4 mb-3 text-brown"></i>
+                        <h4 class="text-brown">Điện Thoại</h4>
+                        <p class="lead">
+                            <a href="tel:+84337771917" class="text-decoration-none text-dark">0337771917</a><br />
+                            <a href="tel:+84984563217" class="text-decoration-none text-dark">0984563217</a>
+                        </p>
+                        <p class="text-muted">Hãy gọi cho chúng tôi trong giờ hành chính để được hỗ trợ nhanh nhất.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="contact-info-block p-4 rounded text-center h-100">
+                        <i class="oi oi-envelope-closed display-4 mb-3 text-brown"></i>
+                        <h4 class="text-brown">Email</h4>
+                        <p class="lead"><a href="mailto:info@thanhhiep.com" class="text-decoration-none text-dark">info@thanhhiep.com</a></p>
+                        <p class="text-muted">Gửi email cho chúng tôi bất cứ lúc nào, chúng tôi sẽ phản hồi sớm nhất có thể.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="contact-info-block p-4 rounded text-center h-100">
+                        <i class="oi oi-home display-4 mb-3 text-brown"></i>
+                        <h4 class="text-brown">Địa Chỉ Cửa Hàng</h4>
+                        <p class="lead">44 Hồ Đắc Di, Thành phố Huế</p>
+                        <p class="text-muted">Đến thăm chúng tôi để trải nghiệm hương vị bánh tuyệt hảo.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="contact-info-block p-4 rounded text-center h-100">
+                        <i class="oi oi-globe display-4 mb-3 text-brown"></i>
+                        <h4 class="text-brown">Website & Mạng Xã Hội</h4>
+                        <p class="lead"><a href="https://www.thanhhiep.com" target="_blank" class="text-decoration-none text-dark">www.thanhhiep.com</a></p>
+                        <p class="text-muted">Kết nối với chúng tôi trên các nền tảng xã hội.</p>
+                        <div class="social-icons mt-3">
+                            <a href="https://www.facebook.com/your-thanhhiep-page" target="_blank" class="btn btn-outline-secondary mx-1"><i class="oi oi-book"></i> Facebook</a>
+                            <a href="https://www.instagram.com/your-thanhhiep-account" target="_blank" class="btn btn-outline-secondary mx-1"><i class="oi oi-camera"></i> Instagram</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-5">
+
+            <h2 class="text-center mb-4 text-brown montserrat-font">Hoặc Điền Vào Biểu Mẫu Liên Hệ</h2>
+            <form>
+                <div class="mb-3">
+                    <label for="inputName" class="form-label">Tên của bạn</label>
+                    <input type="text" class="form-control" id="inputName" placeholder="Tên của bạn" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inputEmail" class="form-label">Email của bạn</label>
+                    <input type="email" class="form-control" id="inputEmail" placeholder="email@example.com" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inputSubject" class="form-label">Chủ đề</label>
+                    <input type="text" class="form-control" id="inputSubject" placeholder="Vấn đề bạn cần hỗ trợ" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inputMessage" class="form-label">Nội dung tin nhắn</label>
+                    <textarea class="form-control" id="inputMessage" rows="5" placeholder="Chi tiết yêu cầu của bạn" required></textarea>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg custom-submit-btn">Gửi Tin Nhắn</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .text-brown {
+        color: #8B4513; /* Màu nâu đất đã dùng cho logo */
+    }
+
+    .pacifico-font {
+        font-family: 'Pacifico', cursive;
+    }
+
+    .montserrat-font {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .card {
+        border-radius: 15px; /* Bo góc card */
+    }
+
+    .contact-info-block {
+        background-color: #fcf8f3; /* Màu kem nhạt cho các khối thông tin */
+        border: 1px solid #e0d0b7; /* Viền nhẹ */
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+        .contact-info-block:hover {
+            transform: translateY(-5px); /* Hiệu ứng nổi lên khi hover */
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+    .custom-submit-btn {
+        background-color: #8B4513; /* Màu nâu đất cho nút Gửi */
+        border-color: #8B4513;
+        transition: background-color 0.3s ease;
+    }
+
+        .custom-submit-btn:hover {
+            background-color: #6a4f41; /* Màu nâu đậm hơn khi hover */
+            border-color: #6a4f41;
+        }
+</style>

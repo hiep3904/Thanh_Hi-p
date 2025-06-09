@@ -1,0 +1,42 @@
+﻿@page "/banh/{CakeId:guid}"
+@inject Thanh_Hiệp.Services.CakeService CakeService
+@using Thanh_Hiệp.Models
+
+<PageTitle>@cake?.Name</PageTitle>
+
+<div class="container mt-5">
+    @if (cake != null)
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <img src="@cake.ImageUrl" alt="@cake.Name" class="img-fluid rounded shadow-sm cake-detail-image" />
+            </div>
+            <div class="col-md-6 cake-detail-info">
+                <h1 class="cake-detail-name">@cake.Name</h1>
+                <p class="cake-detail-short-desc">@cake.Description</p>
+                <hr />
+                <h3 class="cake-detail-price">@cake.Price.ToString("N0") đ</h3>
+                <h4 class="mt-4">Mô tả chi tiết</h4>
+                <p class="cake-detail-long-desc">@cake.DetailedDescription</p>
+                <button class="btn btn-primary mt-3">Thêm vào giỏ hàng (Chức năng demo)</button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Đang tải thông tin bánh...</p>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public Guid CakeId { get; set; } // Nhận Id từ URL
+
+    private Cake? cake;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        // Lấy thông tin bánh từ service dựa trên Id nhận được từ URL
+        cake = await CakeService.GetCakeByIdAsync(CakeId);
+    }
+}

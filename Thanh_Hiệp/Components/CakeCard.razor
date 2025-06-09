@@ -1,0 +1,38 @@
+﻿@using Thanh_Hiệp.Models
+@inject NavigationManager NavigationManager
+
+<div class="card mb-4">
+
+    @* Đây là thẻ div bao ngoài của bạn, hoặc thẻ tương tự *@
+    @if (!string.IsNullOrEmpty(Cake?.ImageUrl))
+    {
+        <img src="@Cake.ImageUrl" alt="@Cake.Name" class="anh-banh-hinh-tron" /> @* <-- SỬA LẠI DÒNG NÀY *@
+    }
+    else
+    {
+        @* Phần này giữ nguyên hoặc sửa cho placeholder cũng tròn *@
+        <div style="width:150px; height:150px; background-color:#e0e0e0; display:flex; align-items:center; justify-content:center; border-radius: 50%; margin-left: auto; margin-right: auto; margin-bottom: 15px;">
+            <p style="margin:0; color:#757575;">(Chưa có ảnh)</p>
+        </div>
+    }
+
+    <div class="card-body">
+        <h5 class="card-title">@Cake?.Name</h5>
+        <p class="card-text">@Cake?.Description</p>
+        <p class="card-text"><strong>@Cake?.Price.ToString("N0") đ</strong></p>
+        <button class="btn btn-primary" @onclick="NavigateToDetail">Chi tiết</button>
+    </div>
+
+</div>
+
+@code {
+    [Parameter]
+    public Cake? Cake { get; set; }
+     private void NavigateToDetail()
+    {
+        if (Cake != null)
+        {
+            NavigationManager.NavigateTo($"/banh/{Cake.Id}");
+        }
+    }
+}

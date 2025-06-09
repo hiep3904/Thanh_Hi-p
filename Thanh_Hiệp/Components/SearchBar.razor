@@ -1,0 +1,67 @@
+﻿@* File: Components/SearchBar.razor *@
+<div class="input-group mb-2">
+    <input type="text" class="form-control" placeholder="Tìm kiếm bánh..."
+           @bind="CurrentValue" @bind:event="oninput"
+           @onkeyup="HandleKeyUp" />
+    <button class="btn btn-primary" @onclick="SearchClicked">Tìm</button>
+</div>
+
+@code {
+    private string? _currentValue;
+
+    // Tham số này nhận giá trị từ component cha (Index.razor)
+    // và cũng là giá trị mà input này sẽ bind tới thông qua CurrentValue
+    [Parameter]
+    public string? Value { get; set; }
+
+    // EventCallback này sẽ được gọi để thông báo cho cha khi giá trị thay đổi
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    // EventCallback này để thông báo cho cha khi nút Tìm được nhấn
+    [Parameter]
+    public EventCallback OnSearch { get; set; }
+
+    // Thuộc tính trung gian để input @bind tới
+    // Khi người dùng gõ, nó sẽ cập nhật _currentValue và gọi ValueChanged
+    private string? CurrentValue
+    {
+        get => _currentValue;
+        set
+        {
+            if (_currentValue != value)
+            {
+                _currentValue = value;
+                // Thông báo cho component cha rằng giá trị đã thay đổi
+                ValueChanged.InvokeAsync(_currentValue);
+            }
+        }
+    }
+
+    // Khi component được khởi tạo hoặc tham số Value từ cha thay đổi,
+    // cập nhật giá trị nội bộ CurrentValue
+    protected override void OnParametersSet()
+    {
+        // Đồng bộ _currentValue với Value từ cha, nếu chúng khác nhau
+        // Điều này quan trọng nếu cha thay đổi giá trị từ bên ngoài
+        if (_currentValue != Value)
+        {
+            _currentValue = Value;
+        }
+    }
+
+    private async Task HandleKeyUp(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SearchClicked();
+        }
+    }
+
+    private Task SearchClicked()
+    {
+        // Khi nút Tìm được nhấn, chỉ cần gọi OnSearch của cha
+        // Cha đã có giá trị tìm kiếm mới nhất thông qua ValueChanged rồi
+        return OnSearch.InvokeAsync();
+    }
+}

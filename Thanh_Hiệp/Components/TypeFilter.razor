@@ -1,0 +1,40 @@
+﻿<div class="form-group mb-2">
+    <select id="cakeTypeFilter" class="form-select" @onchange="OnTypeChange">
+        <option value="">Tất Cả Các Loại Bánh</option>
+        @if (CakeTypes != null)
+        {
+            @foreach (var cakeType in CakeTypes)
+            {
+                <option value="@cakeType.Id" selected="@(cakeType.Id == SelectedCakeTypeId)">@cakeType.Name</option>
+            }
+        }
+    </select>
+</div>
+
+@code {
+    [Parameter]
+    public Guid? SelectedCakeTypeId { get; set; }
+
+    [Parameter]
+    public EventCallback<Guid?> SelectedCakeTypeIdChanged { get; set; }
+
+    [Parameter]
+    public List<CakeType>? CakeTypes { get; set; }
+
+    [Parameter]
+    public EventCallback OnFilter { get; set; }
+
+    private async Task OnTypeChange(ChangeEventArgs e)
+    {
+        if (e.Value is string stringValue && Guid.TryParse(stringValue, out Guid guidValue))
+        {
+            SelectedCakeTypeId = guidValue;
+        }
+        else
+        {
+            SelectedCakeTypeId = null;
+        }
+        await SelectedCakeTypeIdChanged.InvokeAsync(SelectedCakeTypeId);
+        await OnFilter.InvokeAsync();
+    }
+}

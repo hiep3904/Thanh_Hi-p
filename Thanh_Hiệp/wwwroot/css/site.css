@@ -1,0 +1,461 @@
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+/* Nhúng font Pacifico từ Google Fonts cho logo và tiêu đề banner */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+/* Nhúng font Montserrat từ Google Fonts cho menu */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
+
+html, body {
+    background-color: #f5f5dc; /* Giữ nguyên màu nền kem của bạn */
+    font-family: 'Source Serif 4', serif; /* Đặt font chữ thường mặc định */
+    color: #424242; /* Màu chữ chính hơi xám đậm cho dễ đọc */
+}
+
+/* Áp dụng font Playfair Display cho tất cả các tiêu đề */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+}
+
+/* Áp dụng font chữ thường cho các ô nhập liệu để đảm bảo đồng nhất */
+input, select, textarea, button {
+    font-family: 'Source Serif 4', serif;
+}
+
+
+h1:focus {
+    outline: none;
+}
+
+a, .btn-link {
+    font-family: 'Montserrat', sans-serif; /* Font cho nút */
+    font-weight: 500;
+    font-size: 1rem; /* Kích thước chữ cho nút */
+}
+
+.btn-primary {
+    font-family: 'Montserrat', sans-serif; /* Font Montserrat cho nút */
+    font-size: 16px;
+    color: #fff;
+    background-color: #0071c1;
+}
+
+/* Các style cơ bản khác giữ nguyên */
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+.blazor-error-boundary {
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNDkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JkZy8xOTk5L3hsaW5rIiBvdmVyZmxvdz0iaGlkZGVuIj48ZGVmcz48Y2xpcFBhdGggaWk9ImNsaXAwIj48cmVjdCB4PSIyMzUiIHk9IjUxIiB3aWR0aD0iNTYiIGhlaWdodD0iNDkiLz48L2NsaXBWYXRoPjwvZGVmcz48ZyBjbGlwLXhhdGg9InVybCjTGNsaXAwKSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIzNSAtNTEpIj48cGF0aCBkPSJNMjYzLjUwNiA1MUMyNjQuNzE3IDUxIDI2NS44MTMgNTEuNDgzNyAyNjYuNjA2IDUyLjI2NThMMjY3LjA1MiA1Mi43OTg3IDI2Ny41MzkgNTMuNjI4MyAyOTAuMTg1IDkyLjE4MzEgMjkwLjU0NSA5Mi43OTUgMjkwLjY1NiA5Mi45OTZDMjkwLjg3NyA5My41MTMgMjkxIDk0LjA4MTUgMjkxIDk0LjY3ODIgMjkxIDk3LjA2NTEgMjg5LjAzOCA5OSAyODYuNjE3IDk5TDI0MC4zODMgOTlDMjM3Ljk2MyA5OSAyMzYgOTcuMDY1MSAyMzYgOTQuNjc4MiAyMzYgOTQuMzc5OSAyMzYuMDMxIDk0LjA4ODYgMjM2LjA4OSA5My44MDcyTDIzNi4zMzggOTMuMDE2MiAyMzYuODU4IDkyLjEzMTQgMjU5LjQ3MyA1My42Mjk0IDI1OS45NjEgNTIuNzk4NSAyNjAuNDA3IDUyLjI2NThDMjYxLjIgNTEuNDgzNyAyNjIuMjk2IDUxIDI2My41MDYgNTFaTTI2My41ODYgNjYuMDE4M0MyNjAuNzM3IDY2LjAxODMgMjU5LjMxMyA2Ny4xMjQ1IDI1OS4zMTMgNjkuMzM3IDI1OS4zMTMgNjkuNjEwMiAyNTkuMzMyIDY5Ljg2MDggMjU5LjM3MSA3MC4wODg3TDI2MS43OTUgODQuMDE2MSAyNjUuMzggODQuMDE2MSAyNjcuODIxIDY5Ljc0NzVDMjY3Ljg2IDY5LjczMDkgMjY3Ljg3OSA2OS41ODc3IDI2Ny44NzkgNjkuMzE3OSAyNjcuODc5IDY3LjExODIgMjY2LjQ0OCA2Ni4wMTgzIDI2My41ODYgNjYuMDE4M1pNMjYzLjU3NiA4Ni4wNTQ3QzI2MS4wNDkgODYuMDU0NyAyNTkuNzg2IDg3LjMwMDUgMjU5Ljc4NiA4OS43OTIxIDI1OS43ODYgOTIuMjgzNyAyNjEuMDQ5IDkzLjUyOTUgMjYzLjU3NiA5My41Mjk1IDI2Ni4xMTYgOTMuNTI5NSAyNjcuMzg3IDkyLjI4MzcgMjY3LjM4NyA4OS43OTIxIDI2Ny4zODcgODcuMzAwNSAyNjYuMTE2IDg2LjA1NDcgMjYzLjU3NiA4Ni4wNTQ3WiIgZmlsbD0iI0ZGRTUwMCIgZmlsbC1ydWxlPSJldmVub2RkIi8+PC9nPg8vc3ZnPg==) no-repeat 1rem/1.8rem, #b32121;
+    padding: 1rem 1rem 1rem 3.7rem;
+    color: white;
+}
+
+    .blazor-error-boundary::after {
+        content: "An error has occurred."
+    }
+
+/* ==================================== */
+/* LAYOUT MỚI & TOP BAR & MENU NGANG */
+/* ==================================== */
+
+/* Top Bar (giống Anh Hoa Bakery) */
+.top-bar-custom {
+    background-color: #333; /* Màu nền top bar (có thể đổi thành màu bạn thích) */
+    color: #fff; /* Màu chữ trắng */
+    padding: 10px 0; /* Padding trên dưới */
+    font-size: 0.9rem;
+    position: fixed; /* Cố định ở trên cùng */
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1040; /* Đảm bảo cao nhất để không bị che */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.top-bar-info, .top-bar-account {
+    padding: 0 15px; /* Padding hai bên cho thông tin/tài khoản */
+}
+
+.top-bar-info {
+    text-align: left;
+}
+
+.top-bar-account {
+    text-align: right;
+}
+
+.top-bar-logo-center {
+    flex-grow: 1; /* Cho phép phần logo chiếm khoảng trống còn lại */
+    text-align: center; /* Căn giữa logo */
+}
+
+/* Logo nhỏ trong Top Bar */
+.main-logo-mini {
+    font-family: 'Pacifico', cursive; /* Font cho logo */
+    font-size: 2.2rem; /* Kích thước logo nhỏ hơn */
+    font-weight: 400;
+    color: #fff; /* Màu chữ trắng cho logo trên nền tối */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    display: inline-block;
+    transform: rotate(-1deg);
+}
+
+/* Thanh Menu Ngang (phía dưới Top Bar) */
+.main-navbar-bottom {
+    background-color: #6a4f41 !important; /* Màu nâu ấm hơn cho thanh menu chính */
+    margin-top: 50px; /* Đẩy xuống dưới top bar (chiều cao của top-bar-custom) */
+    width: 100%;
+    z-index: 1030; /* Đảm bảo nằm trên nội dung chính */
+    position: fixed; /* Cố định */
+    top: 0; /* Đặt ở vị trí trên cùng, nhưng margin-top sẽ đẩy xuống */
+    left: 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+    .main-navbar-bottom .navbar-nav .nav-item {
+        margin: 0 8px; /* Khoảng cách giữa các mục menu */
+    }
+
+    .main-navbar-bottom .navbar-nav .nav-link {
+        color: #fff; /* Màu chữ trắng */
+        font-family: 'Montserrat', sans-serif; /* Font hiện đại, dễ đọc cho menu. Bạn có thể thử 'Georgia' nếu muốn vintage hơn */
+        font-size: 1.05rem;
+        font-weight: 500;
+        text-transform: uppercase; /* Viết hoa các mục menu */
+        padding: 1rem 1.2rem;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+        .main-navbar-bottom .navbar-nav .nav-link:hover,
+        .main-navbar-bottom .navbar-nav .nav-link.active {
+            background-color: #8B4513; /* Màu nâu đất khi hover/active */
+            border-radius: 4px;
+            color: #fff;
+        }
+
+    /* Style cho Dropdown Menu */
+    .main-navbar-bottom .dropdown-menu {
+        background-color: #795548; /* Màu nền cho dropdown */
+        border: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .main-navbar-bottom .dropdown-item {
+        color: #fff; /* Màu chữ trong dropdown */
+        padding: 8px 20px;
+    }
+
+        .main-navbar-bottom .dropdown-item:hover {
+            background-color: #5d4037; /* Màu nền khi hover trong dropdown */
+            color: #fff;
+        }
+
+/* Khoảng cách cho nội dung chính để không bị che bởi top bar và navbar */
+.main-content-wrapper {
+    padding-top: 110px; /* Tổng chiều cao của top-bar (50px) + main-navbar (60px) + một chút khoảng trống */
+    padding-bottom: 50px;
+}
+
+.content {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 0 !important; /* Đảm bảo không có padding-top thừa từ .content cũ */
+}
+
+/* ==================================== */
+/* PHẦN LOGO DẠNG CHỮ Ở TRANG CHỦ (lớn)*/
+/* ==================================== */
+/* Đây là logo chính, lớn hơn, chỉ xuất hiện ở trang Index.razor */
+.logo-area {
+    text-align: center; /* Căn giữa logo */
+    margin-bottom: 30px; /* Khoảng cách dưới logo */
+    padding-top: 20px; /* Khoảng cách trên logo */
+}
+
+.main-logo {
+    font-family: 'Pacifico', cursive; /* Áp dụng font Pacifico đã nhúng */
+    font-size: 5.5rem; /* Kích thước chữ lớn, dễ nhìn */
+    font-weight: 400;
+    color: #8B4513; /* Màu nâu đất, ấm áp và vintage */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
+    letter-spacing: 1px;
+    margin: 0;
+    display: inline-block;
+    transform: rotate(-1deg);
+}
+
+/* Đảm bảo tiêu đề "Các Loại Bánh" không bị ảnh hưởng bởi style logo */
+h1 {
+    font-family: Georgia, serif;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* ==================================== */
+/* PHẦN ẢNH SẢN PHẨM (BÁNH) */
+/* ==================================== */
+.anh-banh-hinh-tron {
+    width: 280px;
+    height: 280px;
+    border-radius: 25px; /* Giữ bo góc bạn thích, tôi đã điều chỉnh lại thành 25px thay vì 20px như mẫu cũ của bạn */
+    object-fit: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ==================================== */
+/* CAROUSEL / BANNER TRANG CHỦ */
+/* ==================================== */
+.hero-carousel {
+    margin-bottom: 50px; /* Khoảng cách dưới carousel */
+    max-width: 100%; /* Đảm bảo carousel không vượt quá chiều rộng của nội dung */
+    overflow: hidden; /* Đảm bảo hình ảnh không tràn ra ngoài */
+    border-radius: 8px; /* Bo góc nhẹ cho carousel */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+}
+
+    .hero-carousel img {
+        height: 450px; /* Chiều cao cố định cho hình ảnh trong carousel */
+        object-fit: cover; /* Đảm bảo hình ảnh được căn chỉnh và không bị méo */
+        width: 100%; /* Kéo dài hình ảnh ra toàn bộ chiều rộng của carousel */
+    }
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5); /* Nền mờ cho caption */
+    padding: 20px;
+    border-radius: 8px;
+    bottom: 20px; /* Khoảng cách từ dưới lên */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%; /* Chiều rộng của caption */
+    max-width: 600px;
+    text-align: center;
+}
+
+    .carousel-caption h2 {
+        font-family: 'Pacifico', cursive; /* Sử dụng font Pacifico cho tiêu đề */
+        font-size: 3rem;
+        color: #fff;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .carousel-caption p {
+        font-size: 1.2rem;
+        color: #f0f0f0;
+    }
+
+/* Điều chỉnh cho màn hình nhỏ hơn (điện thoại) */
+@media (max-width: 768px) {
+    .hero-carousel img {
+        height: 250px; /* Chiều cao nhỏ hơn trên di động */
+    }
+
+    .carousel-caption {
+        width: 95%;
+        padding: 10px;
+    }
+
+        .carousel-caption h2 {
+            font-size: 1.8rem;
+        }
+
+        .carousel-caption p {
+            font-size: 0.9rem;
+        }
+}
+
+/* --- CSS cho trang Giới Thiệu --- */
+.about-us-container {
+    font-family: Georgia, serif; /* Sử dụng font vintage */
+    color: #5d4037; /* Màu chữ nâu đất ấm áp */
+}
+
+.about-us-title {
+    font-family: 'Playfair Display', serif; /* Font chữ nghệ thuật cho tiêu đề chính */
+    font-size: 3rem;
+    color: #8d6e63;
+}
+
+.about-us-subtitle {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #a1887f;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    color: #6d4c41;
+    border-bottom: 2px solid #d7ccc8; /* Đường gạch chân trang trí */
+    padding-bottom: 10px;
+    display: inline-block; /* Giúp đường gạch chân chỉ dài bằng chữ */
+}
+
+.philosophy-section {
+    background-color: rgba(245, 245, 220, 0.4); /* Màu nền kem hơi trong suốt */
+    padding: 40px 20px;
+    border-radius: 8px;
+}
+
+.philosophy-icon {
+    font-size: 2.5rem; /* Kích thước icon to hơn */
+    color: #a1887f; /* Màu icon */
+    margin-bottom: 15px;
+}
+
+.philosophy-item h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.invitation-text {
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 20px auto 0; /* Căn giữa và tạo khoảng cách */
+}
+
+/* --- CSS cho Trang Chi Tiết Bánh --- */
+.cake-detail-image {
+    border-radius: 15px; /* Bo góc ảnh lớn */
+}
+
+.cake-detail-info {
+    padding-left: 30px;
+}
+
+.cake-detail-name {
+    font-family: 'Playfair Display', serif; /* Font nghệ thuật cho tên bánh */
+    font-weight: 700;
+    color: #6a4e3d;
+}
+
+.cake-detail-price {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #a0522d;
+}
+
+.cake-detail-long-desc {
+    line-height: 1.8; /* Giãn dòng cho dễ đọc */
+}
+
+/* Sửa lỗi nội dung bị che khuất bởi thanh menu */
+main {
+    /* Đẩy toàn bộ nội dung chính xuống một khoảng
+       Bạn có thể điều chỉnh số 130px này nếu nó chưa vừa ý nhé (ví dụ: 120px, 140px) */
+    padding-top: 130px;
+}
+
+/* --- CSS cho trang Tin Tức (Blog) --- */
+.blog-container {
+    color: #5d4037; /* Màu chữ nâu đất ấm áp */
+}
+
+.blog-main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: #8d6e63;
+}
+
+.blog-subtitle {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #a1887f;
+    margin-bottom: 40px;
+}
+
+.article-entry {
+    background-color: rgba(253, 245, 230, 0.5); /* Màu nền kem hơi trong suốt */
+    padding: 30px 0;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.article-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #6d4c41;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.article-meta {
+    text-align: center;
+    font-style: italic;
+    color: #9e9e9e;
+    margin-bottom: 25px;
+}
+
+.article-image {
+    margin-bottom: 25px;
+    border-radius: 5px; /* Bo góc nhẹ cho ảnh */
+}
+
+.article-content {
+    line-height: 1.9; /* Giãn dòng cho dễ đọc */
+    font-size: 1.1rem;
+    text-align: justify; /* Căn đều 2 bên cho đẹp */
+}
+/* --- CSS cho các nút phân trang --- */
+.pagination-controls {
+    gap: 15px; /* Tạo khoảng cách giữa các nút */
+}
+
+    .pagination-controls span {
+        font-weight: bold;
+        color: #5d4037;
+        font-size: 1.1rem;
+    }
+
+    .pagination-controls button {
+        background-color: #e6d7b9;
+        border: 1px solid #d4c0a1;
+        color: #5d4037;
+        font-weight: bold;
+    }
+
+        .pagination-controls button:disabled {
+            background-color: #f5f5f5;
+            color: #cccccc;
+            cursor: not-allowed;
+            border-color: #e0e0e0;
+        }

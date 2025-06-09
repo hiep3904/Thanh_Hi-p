@@ -1,0 +1,47 @@
+﻿@page "/menu"
+
+@inject Thanh_Hiệp.Services.CakeService CakeService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Menu Bánh</PageTitle>
+
+<h1>Menu Bánh</h1>
+
+<div class="row">
+    @if (cakeTypes == null || !cakeTypes.Any())
+    {
+        <p>Không có loại bánh nào.</p>
+    }
+    else
+    {
+        @foreach (var cakeType in cakeTypes)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    @if (!string.IsNullOrEmpty(cakeType.ImageUrl))
+                    {
+                        <img src="@cakeType.ImageUrl" class="card-img-top" alt="@cakeType.Name" style="height:200px; object-fit:cover;" />
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@cakeType.Name</h5>
+                        <button @onclick="() => NavigateToCakeType(cakeType.Id)" class="btn btn-primary">Xem các loại @cakeType.Name</button>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    private List<CakeType>? cakeTypes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        cakeTypes = await CakeService.GetCakeTypesAsync();
+    }
+
+    private void NavigateToCakeType(Guid cakeTypeId)
+    {
+        NavigationManager.NavigateTo($"/menu/{cakeTypeId}");
+    }
+}

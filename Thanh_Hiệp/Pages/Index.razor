@@ -1,0 +1,193 @@
+﻿@page "/"
+@using Thanh_Hiệp.Components
+
+@inject Thanh_Hiệp.Services.CakeService CakeService
+
+<PageTitle>Trang Chủ - Tiệm Bánh</PageTitle>
+<div class="logo-area">
+    <h1 class="main-logo">Thanh Hiệp</h1>
+</div>
+<div id="heroCarousel" class="carousel slide hero-carousel mb-5" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="images/banners/thiet-ke-quan-cafe-banh-ngot.jpg" class="d-block w-100" alt="Tiệm bánh sang trọng">
+            <div class="carousel-caption d-none d-md-block">
+                <h2>Hương vị tuyệt hảo</h2>
+                <p>Những chiếc bánh được làm từ tâm huyết.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="images/banners/banh-kem-ngay-cuoi-001.jpg" class="d-block w-100" alt="Bánh kem ngon">
+            <div class="carousel-caption d-none d-md-block">
+                <h2>Nghệ thuật làm bánh</h2>
+                <p>Khám phá sự tinh tế trong từng sản phẩm.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="images/banners/images (1).jpg" class="d-block w-100" alt="Bánh ngọt hấp dẫn">
+            <div class="carousel-caption d-none d-md-block">
+                <h2>Không gian ấm cúng</h2>
+                <p>Nơi lý tưởng để thưởng thức bánh và cà phê.</p>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<h1>Các Loại Bánh</h1>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <SearchBar @bind-Value="searchTerm" OnSearch="ApplyFilters" />
+    </div>
+    <div class="col-md-6">
+        <TypeFilter @bind-SelectedCakeTypeId="selectedCakeTypeId" CakeTypes="cakeTypes" OnFilter="ApplyFilters" />
+    </div>
+</div>
+
+@if (loading)
+{
+    <p>Đang tải...</p>
+}
+else if (filteredCakes == null || !filteredCakes.Any())
+{
+    <p>Không có bánh nào.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var cake in filteredCakes.Skip((currentPage - 1) * cakesPerPage).Take(cakesPerPage))
+        {
+            <div class="col-md-4 mb-4">
+                <CakeCard Cake="cake" />
+            </div>
+        }
+    </div>
+    @* DÁN TOÀN BỘ KHỐI CODE BÊN DƯỚI VÀO ĐÂY *@
+    @if (filteredCakes != null && filteredCakes.Count > cakesPerPage)
+    {
+        <div class="row mt-4">
+            <div class="col-12 d-flex justify-content-center align-items-center pagination-controls">
+                <button class="btn btn-secondary" disabled="@(currentPage == 1)" @onclick="() => currentPage--">
+                    &laquo; Trang trước
+                </button>
+
+                <span class="mx-3">
+                    Trang @currentPage / @(Math.Ceiling((double)filteredCakes.Count / cakesPerPage))
+                </span>
+
+                <button class="btn btn-secondary" disabled="@(currentPage * cakesPerPage >= filteredCakes.Count)" @onclick="() => currentPage++">
+                    Trang sau &raquo;
+                </button>
+            </div>
+        </div>
+    }
+}
+
+@code {
+    private List<Cake>? allCakes;
+    private List<Cake>? filteredCakes;
+    private List<CakeType>? cakeTypes;
+    private bool loading = true;
+    private int currentPage = 1; // Biến để lưu số của trang hiện tại, luôn bắt đầu từ trang 1
+    private int cakesPerPage = 6; // Hiển thị 9 bánh trên mỗi trang, bạn có thể đổi số này nếu muốn
+
+
+    // Sửa lại searchTerm như sau:
+    private string _searchTermValue = string.Empty;
+    private string searchTerm
+    {
+        get => _searchTermValue;
+        set
+        {
+            // Dòng log quan trọng ở đây
+            Console.WriteLine($"Index.razor: searchTerm ĐANG ĐƯỢC THAY ĐỔI. Giá trị cũ: '{_searchTermValue}', Giá trị mới: '{value}'");
+            _searchTermValue = value;
+        }
+    }
+    // Kết thúc phần sửa searchTerm
+
+    private Guid? selectedCakeTypeId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Dòng log quan trọng ở đây
+            Console.WriteLine("Index.razor: OnInitializedAsync bắt đầu.");
+            allCakes = await CakeService.GetCakesAsync();
+            cakeTypes = await CakeService.GetCakeTypesAsync();
+            // Dòng log quan trọng ở đây
+            Console.WriteLine("Index.razor: Dữ liệu đã tải xong. Gọi ApplyFilters lần đầu.");
+            ApplyFilters(); // searchTerm ở đây sẽ là rỗng
+        }
+        catch (Exception ex)
+        {
+            // Dòng log quan trọng ở đây
+            Console.WriteLine($"Lỗi trong OnInitializedAsync: {ex.Message}");
+        }
+        finally
+        {
+            loading = false;
+            // Dòng log quan trọng ở đây
+            Console.WriteLine("Index.razor: OnInitializedAsync kết thúc, loading = false.");
+        }
+    }
+
+    private void ApplyFilters()
+    {
+        currentPage = 1;
+        // Dòng log quan trọng ở đây
+        Console.WriteLine($"Index.razor: ApplyFilters ĐƯỢC GỌI. SearchTerm hiện tại: '{searchTerm}', SelectedCakeTypeId: '{selectedCakeTypeId}'");
+
+        if (allCakes == null)
+        {
+            filteredCakes = new List<Cake>();
+            // Dòng log quan trọng ở đây
+            Console.WriteLine("Index.razor: ApplyFilters - allCakes là null, trả về danh sách lọc rỗng.");
+            return;
+        }
+
+        IEnumerable<Cake> query = allCakes;
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            // Dòng log quan trọng ở đây
+            Console.WriteLine($"Index.razor: ApplyFilters - Đang lọc với searchTerm: '{searchTerm}'");
+            query = query.Where(c => c.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                     (c.Description != null && c.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)));
+        }
+        else
+        {
+            // Dòng log quan trọng ở đây
+            Console.WriteLine("Index.razor: ApplyFilters - searchTerm rỗng hoặc chỉ chứa khoảng trắng, không lọc theo searchTerm.");
+        }
+
+        if (selectedCakeTypeId.HasValue && selectedCakeTypeId != Guid.Empty)
+        {
+            // Dòng log quan trọng ở đây
+            Console.WriteLine($"Index.razor: ApplyFilters - Đang lọc với selectedCakeTypeId: '{selectedCakeTypeId}'");
+            query = query.Where(c => c.CakeTypeId == selectedCakeTypeId.Value);
+        }
+        else
+        {
+            // Dòng log quan trọng ở đây
+            Console.WriteLine("Index.razor: ApplyFilters - Không có selectedCakeTypeId, không lọc theo loại bánh.");
+        }
+
+        filteredCakes = query.ToList();
+        // Dòng log quan trọng ở đây
+        Console.WriteLine($"Index.razor: ApplyFilters - Lọc hoàn tất. Số lượng bánh tìm thấy: {filteredCakes.Count}");
+    }
+}

@@ -1,0 +1,83 @@
+﻿@page "/tintuc"
+
+<PageTitle>Tin Tức - Tiệm Bánh Thanh Hiệp</PageTitle>
+
+<div class="container my-5 blog-container">
+
+    @* --- Phần Tiêu Đề Chính Của Trang --- *@
+    <div class="text-center mb-5">
+        <h1 class="blog-main-title">Chuyện Của Bếp Bánh Thanh Hiệp</h1>
+        <p class="blog-subtitle">Nơi chia sẻ những câu chuyện ngọt ngào và niềm đam mê...</p>
+    </div>
+
+    @* Vòng lặp để hiển thị tất cả các bài viết *@
+    @if (Articles != null && Articles.Any())
+    {
+        @foreach (var article in Articles)
+        {
+            <div class="row justify-content-center mb-5 article-entry">
+                <div class="col-md-8">
+                    <article>
+                        <h2 class="article-title">@article.Title</h2>
+                        <p class="article-meta">Đăng ngày: @article.PublishedDate.ToString("dd/MM/yyyy")</p>
+
+                        @if (!string.IsNullOrEmpty(article.ImageUrl))
+                        {
+                            <img src="@article.ImageUrl" alt="@article.Title" class="img-fluid rounded shadow-sm mb-4 article-image" />
+                        }
+
+                        @* Hiển thị nội dung bài viết. Dùng MarkupString để có thể xuống dòng bằng <br /> *@
+                        <div class="article-content">
+                            @((MarkupString)article.Content)
+                        </div>
+                    </article>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="text-center">Chưa có bài viết nào.</p>
+    }
+</div>
+
+@code {
+    // Đây là một class nhỏ để định nghĩa cấu trúc cho một bài viết
+    public class Article
+    {
+        public string Title { get; set; } = string.Empty;
+        public DateTime PublishedDate { get; set; }
+        public string? ImageUrl { get; set; }
+        public string Content { get; set; } = string.Empty;
+    }
+
+    // Danh sách các bài viết mẫu của chúng ta
+    public List<Article> Articles { get; set; } = new List<Article>();
+
+    protected override void OnInitialized()
+    {
+        // Khởi tạo dữ liệu mẫu cho các bài viết
+        Articles = new List<Article>
+        {
+            new Article
+            {
+                Title = "Hành Trình Ra Đời Của Một Chiếc Bánh Mousse Xoài",
+                PublishedDate = new DateTime(2025, 6, 8),
+                ImageUrl = "/images/sự kiên xoài.jpg", // Lấy ảnh từ các bánh bạn đã có
+                Content = "Mỗi chiếc bánh Mousse Xoài tại Thanh Hiệp không chỉ là một món tráng miệng, mà là cả một câu chuyện.<br/><br/>" +
+                          "Hành trình bắt đầu từ những quả xoài Cát Hòa Lộc chín mọng, được chúng tôi lựa chọn kỹ lưỡng từ những nhà vườn uy tín nhất. Xoài được xay nhuyễn, giữ lại trọn vẹn hương vị ngọt thơm tự nhiên. Lớp kem whipping cream cao cấp được đánh bông đến độ mềm mịn hoàn hảo, quyện cùng vị chua nhẹ của sữa chua để tạo nên một kết cấu xốp nhẹ, tan ngay trong miệng.<br/><br/>" +
+                          "Tất cả được đặt trên một lớp đế bánh quy bơ giòn tan, tạo nên sự tương phản thú vị. Chúng tôi tin rằng, chính sự tỉ mỉ trong từng công đoạn đã làm nên sự khác biệt. Hãy cảm nhận tình yêu của chúng tôi trong từng muỗng bánh bạn nhé!"
+            },
+            new Article
+            {
+                Title = "Thông Báo: Ra Mắt Dòng Bánh Kem Sự Kiện Vẽ Logo Theo Yêu Cầu",
+                PublishedDate = new DateTime(2025, 6, 5),
+                ImageUrl = "/images/bánh sự kiện tin tức.jpg",
+                Content = "Bạn đang tìm kiếm một chiếc bánh độc đáo cho sự kiện công ty hay một dịp kỷ niệm đặc biệt? Thanh Hiệp vô cùng hào hứng giới thiệu dòng sản phẩm mới: Bánh Kem Sự Kiện Vẽ Logo Theo Yêu Cầu.<br/><br/>" +
+                          "Chỉ cần gửi cho chúng tôi logo hoặc hình ảnh bạn mong muốn, đội ngũ thợ làm bánh tài hoa của Thanh Hiệp sẽ 'biến hóa' nó thành một tác phẩm nghệ thuật ngọt ngào trên chiếc bánh của bạn. Chúng tôi sử dụng màu thực phẩm cao cấp, an toàn tuyệt đối, đảm bảo chiếc bánh không chỉ đẹp mắt mà còn thơm ngon trọn vị.<br/><br/>" +
+                          "Hãy để Thanh Hiệp giúp bạn tạo nên một dấu ấn khó phai trong ngày đặc biệt của mình!"
+            }
+            // Bạn có thể copy và paste khối `new Article {...}` để thêm các bài viết khác ở đây
+        };
+    }
+}

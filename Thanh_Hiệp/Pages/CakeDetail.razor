@@ -1,0 +1,36 @@
+﻿@page "/cake/{id:guid}"
+
+@inject Thanh_Hiệp.Services.CakeService CakeService
+@inject NavigationManager Navigation
+
+<PageTitle>@cake?.Name</PageTitle>
+
+@if (cake == null)
+{
+    <p>Không tìm thấy bánh.</p>
+}
+else
+{
+    <h1>@cake.Name</h1>
+    <img src="@cake.ImageUrl" alt="@cake.Name" />
+    <p>@cake.Description</p>
+    <p>Giá: @cake.Price.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))</p>
+    <button @onclick="GoBack">Quay lại</button>
+}
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private Cake? cake;
+
+    protected override async Task OnInitializedAsync()
+    {
+        cake = await CakeService.GetCakeByIdAsync(Id);
+    }
+
+    void GoBack()
+    {
+        Navigation.NavigateTo("/");
+    }
+}

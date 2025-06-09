@@ -1,0 +1,90 @@
+﻿@page "/danh-muc/{CategorySlug}"
+@inject Thanh_Hiệp.Services.CakeService CakeService
+@using Thanh_Hiệp.Models
+@using System.Text.RegularExpressions
+
+<PageTitle>@_categoryName</PageTitle>
+
+<div class="container mt-5">
+    @if (_isLoading)
+    {
+        <p><em>Đang tải danh sách bánh...</em></p>
+    }
+    else if (_filteredCakes != null && _filteredCakes.Any())
+    {
+        <h1 class="mb-4" style="text-align:center; font-weight:bold;">@_categoryName</h1>
+
+        <div class="row">
+            @foreach (var cake in _filteredCakes)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <CakeCard Cake="cake" />
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <h1 class="mb-4" style="text-align:center; font-weight:bold;">@_categoryName</h1>
+        <p class="text-center">Không tìm thấy sản phẩm nào trong danh mục này.</p>
+    }
+</div>
+
+
+@code {
+    private bool _isLoading = true;
+    private List<Cake>? _allCakes;
+    private List<CakeType>? _allCakeTypes;
+    private List<Cake> _filteredCakes = new();
+    private string _categoryName = "Danh mục sản phẩm";
+
+    [Parameter]
+    public string? CategorySlug { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _isLoading = true;
+
+        _allCakes = await CakeService.GetCakesAsync();
+        _allCakeTypes = await CakeService.GetCakeTypesAsync();
+
+        if (CategorySlug != null && _allCakeTypes != null)
+        {
+            var foundType = _allCakeTypes.FirstOrDefault(t => GenerateSlug(t.Name) == CategorySlug);
+
+            if (foundType != null)
+            {
+                _categoryName = foundType.Name;
+                _filteredCakes = _allCakes?.Where(c => c.CakeTypeId == foundType.Id).ToList() ?? new List<Cake>();
+            }
+            else
+            {
+                _categoryName = "Không tìm thấy loại bánh";
+                _filteredCakes.Clear();
+            }
+        }
+
+        _isLoading = false;
+    }
+
+    private string GenerateSlug(string phrase)
+    {
+        if (string.IsNullOrEmpty(phrase)) return string.Empty;
+        string str = RemoveAccent(phrase).ToLower();
+        str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
+        str = Regex.Replace(str, @"\s+", " ").Trim();
+        str = Regex.Replace(str, @"\s", "-");
+        return str;
+    }
+
+    private string RemoveAccent(string text)
+    {
+        string from = "áàạảãâấầậẩẫăắằặẳẵéèẹẻẽêếềệểễíìịỉĩóòọỏõôốồộổỗơớờợởỡúùụủũưứừựửữýỳỵỷỹđ";
+        string to = "aaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiiooooooooooooooooouuuuuuuuuuuyyyyyd";
+        for (int i = 0; i < from.Length; i++)
+        {
+            text = text.Replace(from[i], to[i]);
+        }
+        return text;
+    }
+}

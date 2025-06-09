@@ -1,0 +1,45 @@
+﻿@page "/menu/{CakeTypeId:guid}"
+@using Thanh_Hiệp.Models
+
+@inject Thanh_Hiệp.Services.CakeService CakeService
+@inject NavigationManager NavigationManager
+
+<h3>@CakeTypeName</h3>
+
+@if (cakes == null || !cakes.Any())
+{
+    <p>Không có bánh nào thuộc loại này.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var cake in cakes)
+        {
+            <div class="col-md-4 mb-4">
+                <CakeCard Cake="cake" />
+            </div>
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Guid CakeTypeId { get; set; }
+
+    private List<Cake>? cakes;
+    private string CakeTypeName = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var cakeType = await CakeService.GetCakeTypesAsync();
+        var currentCakeType = cakeType?.FirstOrDefault(x => x.Id == CakeTypeId);
+        CakeTypeName = currentCakeType?.Name ?? "Không tìm thấy loại bánh";
+
+        cakes = (await CakeService.GetCakesAsync())?.Where(c => c.CakeTypeId == CakeTypeId).ToList();
+    }
+
+    void GoBack()
+    {
+        NavigationManager.NavigateTo("/menu");
+    }
+}
